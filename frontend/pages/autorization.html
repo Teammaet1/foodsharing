@@ -1,15 +1,11 @@
 <!DOCTYPE html>
-  <head>
-  <header"Access-Control-Allow-Origin : *" />
-    <meta charset="utf-8" />
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-<?php header("Access-Control-Allow-Origin: *"); ?>
+
+<head>
+<title>Foodsharing</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link href="../layout/styles/layout.css" rel="stylesheet" type="text/css" media="all">
-  </head>
+</head>
 
 <!--ФОН-->
 <body style="background-image: url('../images/demo/backgrounds/1.jpg'); min-height: 100vh; max-height: auto; background-repeat: no-repeat; background-size: cover; background-position: center center; color: black; text-align: center; display: flex; flex-direction: column; justify-content: space-between; ">
@@ -46,136 +42,30 @@
     </ul>
 
     <div id="errors" ></div>
-        <form name="userForm" class="authorize__panel">
-            <div class="user__div">
-                <label class="label__user"  for="email">Email:</label>
-                <input class="input__user" placeholder="Email" name="email" />
-            </div>
-            <div class="user__div">
-                <label class="label__user"  for="password">Password:</label>
-                <input class="input__user" placeholder="Password"  name="password" type="password" />
-            </div>
-            <div >
-                <button class="user__button" type="submit" id="submit">Войти</button>
-            </div>
-        </form>
+    <form name="userForm" class="authorize__panel">
+    <div class="user__div">
+    <label class="label__user" for="email">LODIN:</label>
+    <input class="input__user" name="email" />
+    </div>
+    <div class="user__div">
+    <label class="label__user" for="password">PASSWORD:</label>
+    <input class="input__user"  name="password" type="password" />
+    </div>
+    <div >
+    <center><button style="margin:5px" class="user__button" type="submit" id="submit">ВОЙТИ</button></center>
+    </div>
+    </form>
     </header>
 
     <div class="clear"></div>
   </main>
 </div>
 <!--АВТОРИЗАЦИЯ-->
+
+
+
+
 <a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
-<script>
-
-        var referrer_url = document.referrer; //Заносим в переменную прошлую ссылку
-        async function Login(userEmail, userPassword, rememberMe) { //Функция входа в аккаунт
-
-            const response = await fetch("http://localhost:8080", { 
-                method: "POST",
-                headers: { "Accept": "application/json", "Content-Type": "application/json","Access-Control-Allow-Origin":"*"},
-                body: JSON.stringify({ // в json отправляем майл пароль и статическую переменную не запоминать акканут(так как еще не работает запоминание)
-                    email: userEmail,
-                    password: userPassword,
-                    rememberme: false 
-                })
-            });
-            if (response.ok === true) {
-                const a = document.createElement('a');//Если вешел до делаем переход в прошлую ссылку    //TODO:проверка ссылки
-                a.setAttribute('href', referrer_url);
-                a.click();
-            }
-            else { //Если не вошел показываем ошибку
-                const errorData = await response.json();
-                document.getElementById("errors").innerHTML = '';
-                if (errorData.errors) {
-                    if (errorData.errors["Email"]) { //Если проблема в майле то показываем ошибку с майлом
-                        addError(errorData.errors["Email"]);
-                    }
-                    if (errorData.errors["Password"]) {
-                        addError(errorData.errors["Password"]);
-                    }
-                }
-                if (errorData) {
-                    if (errorData["Email"]) {
-                        addError(errorData["Email"]);
-                    }
-
-                }
-
-                document.getElementById("errors").style.display = "block"; //Делаем строку ошибки видимой
-            }
-        }
-
-        function addError(errors) {//Функция для добавление в строку ошибки описание ошибки
-
-            errors.forEach(error => { //Через цикл, так как ошибок может быть несколько
-                const p = document.createElement("p");
-                p.append(error);
-
-                document.getElementById("errors").append(p);  //Находим строку для ошибок и добавляем описание
-            });
-        }
-
-
-
-        document.forms["userForm"].addEventListener("submit", e => { //Создаем ивень при нажатие на кнопку с id submit 
-            e.preventDefault();
-            const form = document.forms["userForm"]; //Находим форму userForm 
-            const email = form.elements["email"].value; //В эту форму находим элемент email и значение в этом элементе заносим в переменную
-            const password = form.elements["password"].value; //В эту форму находим элемент password и значение в этом элементе заносим в переменную
-
-            Login(email, password, true); //Вызываем функцию для авторизации и передаем переменные
-
-        });
-
-
-
-
-        async function GetAuthorize() { //Функция для настройки менюшки начальной
-            const response = await fetch("http://localhost:8080", {
-                method: "GET",
-                headers: { "Accept": "application/json","Access-Control-Allow-Origin":"*"},
-            });
-            if (response.ok === true) {
-                window.location.href = '/index.html';
-            }
-
-
-            let rows = document.getElementById("menu");
-            let liMain = document.createElement("li");
-            liMain.setAttribute("class", "menu__item");
-            let mainA = document.createElement("a");
-            mainA.append("Главная");
-            mainA.setAttribute("href", "/index.html")
-            mainA.setAttribute("class", "menu__link link__outside link__animation");
-            liMain.append(mainA);
-            rows.append(liMain);
-
-            let liAuthorize = document.createElement("li");
-            liAuthorize.setAttribute("class", "menu__item");
-            let authorizeA = document.createElement("a");
-            authorizeA.append("Авторизация");
-            authorizeA.setAttribute("href", "#")
-            authorizeA.setAttribute("class", "menu__link link__inside");
-            liAuthorize.append(authorizeA);
-            rows.append(liAuthorize);
-
-            let liFAQ = document.createElement("li");
-            liFAQ.setAttribute("class", "menu__item");
-            let FAQa = document.createElement("a");
-            FAQa.append("FAQ");
-            FAQa.setAttribute("href", "#")
-            FAQa.setAttribute("class", "menu__link link__outside link__animation");
-            liFAQ.append(FAQa);
-            rows.append(liFAQ);
-
-        }
-
-        GetAuthorize();
-    </script>
-
-
 <!-- JAVASCRIPTS -->
 <script src="layout/scripts/jquery.min.js"></script>
 <script src="layout/scripts/jquery.backtotop.js"></script>
