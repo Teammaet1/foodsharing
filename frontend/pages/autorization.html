@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<head>
+<title>Foodsharing</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link href="../layout/styles/layout.css" rel="stylesheet" type="text/css" media="all">
+</head>
+
+<!--ФОН-->
+<body style="background-image: url('../images/demo/backgrounds/1.jpg'); min-height: 100vh; max-height: auto; background-repeat: no-repeat; background-size: cover; background-position: center center; color: black; text-align: center; display: flex; flex-direction: column; justify-content: space-between; ">
+<!--ФОН-->
+
+<!--МЕНЮ-->
+<div style="align-items: center"class="wrapper row2">
+  <nav id="mainav" class="hoc clear">
+    <!-- ################################################################################################ -->
+    <ul class="clear">
+      <li><a href="../index.html">Главная</a></li>
+      <li><a href="to-volonteers.html">Участникам</a></li>
+      <li><a href="sidebar-right.html">Sidebar Right</a></li>
+      <li><a href="volonterstvo.html">Волонтерство</a></li>
+      <li><a href="FAQ.html">Справка</a></li>
+      <li class="active"><a href="autorization.html">Авторизация</a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="wrapper bgded" >
+  <div id="pageintro" class="hoc clear">
+</div>
+<!--АВТОРИЗАЦИЯ-->
+<div style="margin-bottom: 220px; align-items: center; display: flex;" class="wrapper row3">
+  <main class="hoc container clear">
+    <header class="header">
+
+    <h1 class="header__title">
+    Авторизация
+    </h1>
+
+    <ul id="menu" class="menu">
+    </ul>
+
+    <div id="errors" ></div>
+    <form name="userForm" class="authorize__panel">
+    <div class="user__div">
+    <label class="label__user" for="email">LODIN:</label>
+    <input class="input__user" name="email" />
+    </div>
+    <div class="user__div">
+    <label class="label__user" for="password">PASSWORD:</label>
+    <input class="input__user"  name="password" type="password" />
+    </div>
+    <div >
+    <center><button style="margin:5px" class="user__button" type="submit" id="submit">ВОЙТИ</button></center>
+    </div>
+    </form>
+    </header>
+
+    <div class="clear"></div>
+  </main>
+</div>
+<!--АВТОРИЗАЦИЯ-->
+
+
+
+
+<a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
+<!-- JAVASCRIPTS -->
+<script src="layout/scripts/jquery.min.js"></script>
+<script src="layout/scripts/jquery.backtotop.js"></script>
+<script src="layout/scripts/jquery.mobilemenu.js"></script>
+<!-- IE9 Placeholder Support -->
+<script src="layout/scripts/jquery.placeholder.min.js"></script>
+<!-- / IE9 Placeholder Support -->
+</body>
+</html>
