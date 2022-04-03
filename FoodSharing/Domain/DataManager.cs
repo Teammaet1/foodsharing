@@ -1,23 +1,30 @@
-﻿using IESE.Domain.Repositories.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
+using FoodSharing.Domain.Repositories.Abstract;
 
 namespace FoodSharing.Domain
 {
     public class DataManager
     {
-        public IWordDocumentRepository WordDocument { get; set; }
-        public IWordTemplateRepository WordTepmlate { get; set; }
-        public IDocumentCategoryRepository DocumentCategory { get; set; }
+        public ICategoryRepository category { get; set; }
+        public IChainShopRepository chainShop { get; set; }
+        public ILinkRepository link { get; set; }
+        public IOrderRepository order { get; set; }
+        public IProductRepository product { get; set; }
+        public IShopRepository shop { get; set; }
+        public ITypeUserRepository typeUser { get; set; }
 
-        public DataManager(IWordDocumentRepository wordDocumentRepository, IWordTemplateRepository templateRepository,
-                            IDocumentCategoryRepository documentCategoryRepository)
+        public DataManager(ICategoryRepository categoryRepository, IChainShopRepository chainShopRepository,
+                            ILinkRepository linkRepository, IOrderRepository orderRepository,
+                            IProductRepository productRepository, IShopRepository shopRepository,
+                            ITypeUserRepository typeUserRepository)
         {
-            WordDocument = wordDocumentRepository;
-            WordTepmlate = templateRepository;
-            DocumentCategory = documentCategoryRepository;
+            category = categoryRepository;
+            chainShop = chainShopRepository;
+            link = linkRepository;
+            order = orderRepository;
+            product = productRepository;
+            shop = shopRepository;
+            typeUser = typeUserRepository;
         }
     }
 }

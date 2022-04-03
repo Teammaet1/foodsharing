@@ -1,7 +1,12 @@
+using FoodSharing.Domain;
+using FoodSharing.Domain.Entities;
+using FoodSharing.Domain.Repositories.Abstract;
+using FoodSharing.Domain.Repositories.EntityFramework;
 using FoodSharing.Service;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FoodSharing
 {
@@ -13,12 +18,16 @@ namespace FoodSharing
         {
             Configuration.Bind("Project", new Config());
 
-            //services.AddTransient<IWordDocumentRepository, EFWordDocumentRepository>();
-            //services.AddTransient<IWordTemplateRepository, EFWordTemplateRepository>(); 
-            //services.AddTransient<IDocumentCategoryRepository, EFDocumentCategoryRepository>();
-            //services.AddTransient<DataManager>();
+            services.AddTransient<ICategoryRepository, EFCategoryRepository>();
+            services.AddTransient<ITypeUserRepository, EFTypeUserRepository>(); 
+            services.AddTransient<IChainShopRepository, EFChainShopRepository>();
+            services.AddTransient<IShopRepository, EFShopRepository>();
+            services.AddTransient<ILinkRepository, EFLinkRepository>();
+            services.AddTransient<IProductRepository, EFProductRepository>();
+            services.AddTransient<IOrderRepository, EFOrderRepository>();
+            services.AddTransient<DataManager>();
 
-            //services.AddDbContext<AppDbContext>(x => x.UseSqlServer(Config.ConnectionString)); 
+            services.AddDbContext<AppDbContext>(x => x.UseSqlServer(Config.ConnectionString)); 
 
           
 
