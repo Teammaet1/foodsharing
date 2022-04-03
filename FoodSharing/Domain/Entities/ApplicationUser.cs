@@ -11,6 +11,7 @@ namespace FoodSharing.Domain.Entities
         public int CountOrder { get; set; }
         public List<Link> Links { get; set; } = new List<Link>();
         public List<TypeUser> TypeUsers { get; set; } = new List<TypeUser>();
+        public List<Order> Orders { get; set; } = new List<Order>();
 
     }
 }

@@ -10,5 +10,6 @@ namespace FoodSharing.Domain.Entities
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public List<Shop> Shops { get; set; } = new List<Shop>();
     }
 }

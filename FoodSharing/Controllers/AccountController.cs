@@ -14,7 +14,7 @@ namespace IESE.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AccountController : Controller
+    public class AccountController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> userManager; 
         private readonly SignInManager<ApplicationUser> signInManager;
@@ -24,7 +24,7 @@ namespace IESE.Controllers
             signInManager = signinMgr;
         }
 
-        [HttpPost]
+        [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginViewModel model) 
         {
             if (ModelState.IsValid) 
@@ -36,12 +36,38 @@ namespace IESE.Controllers
                     Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(user, model.Password, true/*model.RememberMe*/, false); //TODO: кнопка запомнить меня //Проверям пароль и нужно ли запоминать аккаунт и входим в аккаунт(но запоминание еще не работает)
                     if (result.Succeeded) 
                     {
-                       // await Authenticate(user); 
+                        await Authenticate(user); 
 
                         return Ok(model); 
                     }
                 }
                 ModelState.AddModelError(nameof(LoginViewModel.Email), "Неверный email или пароль");
+            }
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return NotFound(model);
+        }
+
+        [HttpPost("Registration")]
+        public async Task<IActionResult> Registration(RegistrationViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                IdentityUser userName = await userManager.FindByNameAsync(model.UserName);
+                IdentityUser userMail = await userManager.FindByEmailAsync(model.EMail);
+                if (userName == null && userMail == null)
+                {
+                    await userManager.CreateAsync(new ApplicationUser()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        Email = model.EMail,
+                        UserName = model.UserName,
+                        PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, model.Password)
+                    });
+                    return Ok(model);
+                }
+                ModelState.AddModelError(nameof(LoginViewModel.Email), "Аккаунт с такими данными существет");
             }
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -66,47 +92,29 @@ namespace IESE.Controllers
         }
 
         [HttpGet("AuthorizeRole")] 
-        public async Task<IActionResult> AuthorizeRole()
+        public async Task<IEnumerable<TypeUser>> AuthorizeRole()
         {
-            if (User.Identity.IsAuthenticated) 
-                if (User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value == "admin") 
-                    return Ok(); 
-            return NotFound(); 
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = userManager.FindByIdAsync(User.FindFirst(x => x.Type == "id").Value).Result;
+                if (user != null)
+                    return user.TypeUsers;
+            }
+            return null; 
         }
 
-        //private async Task Authenticate(ApplicationUser user) 
-        //{
-        //    if (userManager.GetRolesAsync(user).Result.FirstOrDefault() == "user") 
-        //    {
-        //        var claims = new List<Claim>
-        //    {
-        //        new Claim(ClaimTypes.Email, user.Email),
-        //        new Claim(ClaimTypes.Name, user.UserName),
-        //        new Claim("FIO", user.Surname + " " + user.Firstname + " " + user.Patronymic),
-        //        new Claim(ClaimsIdentity.DefaultRoleClaimType, userManager.GetRolesAsync(user).Result.FirstOrDefault()),
-        //        new Claim(ClaimTypes.NameIdentifier, user.Id),
-        //        new Claim("course", user.Course.ToString()),
-        //        new Claim("group", user.Group),
-        //        new Claim("faculty", user.Faculty),
-        //        new Claim("dateend", user.DateEnd.ToString()),
-        //        new Claim("birthdate", user.BirthDate.ToString()),
-        //        new Claim("specialization", user.Specialization),
-        //        new Claim("formofeducation", user.FormOfEducation),
-        //        //new Claim("formofeducation", user.FormOfEducation),
-        //        //new Claim("formofeducation", user.FormOfEducation),
-        //        //new Claim("formofeducation", user.FormOfEducation),
-        //        //new Claim("formofeducation", user.FormOfEducation),
-        //    };
+        private async Task Authenticate(ApplicationUser user)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim("id", user.Id)
+            };
 
 
-        //        ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookies", ClaimsIdentity.DefaultNameClaimType,
-        //            ClaimsIdentity.DefaultRoleClaimType); // Сами настрой для куки и что в них заносить
+            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookies", ClaimsIdentity.DefaultNameClaimType,
+                ClaimsIdentity.DefaultRoleClaimType);
 
-        //        await HttpContext.SignInAsync("Identity.Application", new ClaimsPrincipal(id)); //Имя куки в браузере и данные которые занесутся туда
-        //                                                                                        //TODO: ПЕРЕДЕЛАТЬ КУКИ МАЙКРОСОФТ ЭДЖ, МАКЕТ ДОЛЖЭЕН БЫТЬ С ДАННЫМИ СРАЗУ
-
-
-        //    }
-        //}
+            await HttpContext.SignInAsync("Identity.Application", new ClaimsPrincipal(id));
+        }
     }
 }

@@ -4,6 +4,7 @@ using FoodSharing.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodSharing.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220403134746_v2")]
+    partial class v2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,7 +100,7 @@ namespace FoodSharing.Migrations
                         {
                             Id = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b0a2c66f-5df2-4b4f-b493-8fa324f1897a",
+                            ConcurrencyStamp = "3b0b02a5-e4ba-40fa-8df7-6c38e8daebd1",
                             CountOrder = 0,
                             Email = "my@email.com",
                             EmailConfirmed = true,
@@ -106,7 +108,7 @@ namespace FoodSharing.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MY@EMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIyltSaVYNe8Z+00PkWXx+af9NEcV4OES9C66lQQIyKKT+lCCQgAVj/SaGpNqsDSlw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEN9QUamQ9lyGFANeSwAMf4xQ0A66LH3Zcu0BJvl/iWwtODcXqK/LyCizfw0J8cSANQ==",
                             PhoneNumber = "+7777777777",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
@@ -183,22 +185,13 @@ namespace FoodSharing.Migrations
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("SecondId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(0);
-
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("shopId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("shopId");
 
                     b.ToTable("Orders");
                 });
@@ -293,14 +286,14 @@ namespace FoodSharing.Migrations
                         new
                         {
                             Id = "44546e06-8719-4ad8-b88a-f271ae9d6eab",
-                            ConcurrencyStamp = "55886884-c11f-424a-beaa-3c3417373d0a",
+                            ConcurrencyStamp = "bdbd35cc-0f92-4945-bad5-7aa4c1dd6993",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "44546e05-8719-4ad8-b88a-f271ae9d6eab",
-                            ConcurrencyStamp = "9a0e304c-b82d-4708-bd16-2ec6928d3a0e",
+                            ConcurrencyStamp = "784cad2e-82c1-4dbc-97c8-9f884627114d",
                             Name = "user",
                             NormalizedName = "USER"
                         });
@@ -453,14 +446,6 @@ namespace FoodSharing.Migrations
                     b.HasOne("FoodSharing.Domain.Entities.ApplicationUser", null)
                         .WithMany("Orders")
                         .HasForeignKey("ApplicationUserId");
-
-                    b.HasOne("FoodSharing.Domain.Entities.Shop", "shop")
-                        .WithMany()
-                        .HasForeignKey("shopId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("shop");
                 });
 
             modelBuilder.Entity("FoodSharing.Domain.Entities.Product", b =>

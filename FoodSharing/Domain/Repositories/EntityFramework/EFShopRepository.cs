@@ -24,12 +24,12 @@ namespace FoodSharing.Domain.Repositories.EntityFramework
 
         public Shop GetShopById(Guid id)
         {
-            return context.Shops.Include(x => x.ChainShop).FirstOrDefault(c => c.Id == id);
+            return context.Shops.Include(x => x.Categories).FirstOrDefault(c => c.Id == id);
         }
 
         public IQueryable<Shop> GetShops()
         {
-            return context.Shops.Include(x => x.ChainShop);
+            return context.Shops.Include(x => x.Categories);
         }
 
         public async Task SaveShop(Shop entity)
