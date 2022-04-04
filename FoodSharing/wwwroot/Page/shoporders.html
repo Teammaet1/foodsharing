@@ -52,7 +52,7 @@
                 orders.forEach(order => {
                     const tr = document.createElement("tr");
                     let a = document.createElement("a");
-                    a.href = "order.html?id=" + order.id;
+                    a.href = "ordertutor.html?id=" + order.id;
                     a.innerText = order.shop.chain.name + " " + order.shop.address;
                     tr.append(a);
                     table.append(tr);

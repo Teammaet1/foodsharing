@@ -1,6 +1,7 @@
 ﻿
 using FoodSharing.Domain;
 using FoodSharing.Domain.Entities;
+using FoodSharing.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -30,9 +31,26 @@ namespace FoodSharing.Controllers
         {
 
             var id = User.FindFirst(x => x.Type == "id").Value;
-            var order = userManager.Users.Include(x => x.Orders).ThenInclude(x => x.shop).Include(x => x.Orders).ThenInclude(x => x.Products)
-                .FirstOrDefault(x => x.Id == id).Orders.FirstOrDefault(x => x.Id == Id);
+            var user = userManager.Users.Include(x => x.Orders).ThenInclude(x => x.shop).ThenInclude(x => x.Chain).Include(x => x.Orders).ThenInclude(x => x.Products)
+                .FirstOrDefault(x => x.Id == id);
+            var order = user.Orders.FirstOrDefault(x => x.Id == Id);
             order.Products.ForEach(x => x.Orders = null);
+            order.shop.Chain.Shops = null;
+            return order;
+        }
+
+        [HttpGet("OrderTutor/{id}")]
+        public Order GetOrderTutor(Guid Id)
+        {
+
+            var id = User.FindFirst(x => x.Type == "id").Value;
+            var user = userManager.Users.Include(x => x.Orders).ThenInclude(x => x.shop).ThenInclude(x => x.Chain).Include(x => x.Orders).ThenInclude(x => x.Products)
+                .FirstOrDefault(x => x.Id == id);
+            if(!userManager.GetRolesAsync(user).Result.Contains("tutor"))
+                return null;
+            var order = dataManager.order.GetOrderById(Id);
+            order.Products.ForEach(x => x.Orders = null);
+            order.shop.Chain.Shops = null; 
             return order;
         }
 
@@ -64,11 +82,28 @@ namespace FoodSharing.Controllers
                 user.Orders.ForEach(x => x.shop.Chain.Shops = null);
                 var orders = dataManager.order.GetOrders().Where(x => x.Status == "Search").ToList();
                 orders.ForEach(x => x.shop.Chain.Shops = null);
+                orders.ForEach(x => x.Products.ForEach(x => x.Orders = null));
                 return orders;
             }
 
 
             return null;
+        }
+
+        [HttpPost("sendVolonter")]
+        public IActionResult SendVolonter(IdModel idModel)
+        {
+
+            var id = User.FindFirst(x => x.Type == "id").Value;
+            var user = userManager.Users.FirstOrDefault(x => x.Id == id);
+            if (!userManager.GetRolesAsync(user).Result.Contains("tutor"))
+                return NotFound();
+            var volonter = userManager.Users.Include(x => x.Orders).FirstOrDefault(x => x.Id == idModel.idVolonter);
+            var order = dataManager.order.GetOrderById(Guid.Parse(idModel.idOrder));
+            order.Status = "Progress";
+            volonter.Orders.Add(order);
+            userManager.UpdateAsync(volonter);
+            return Ok();
         }
     }
 }
