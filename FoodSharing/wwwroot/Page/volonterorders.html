@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+<html>
     <head>
         <title>Foodsharing</title>
         <meta charset="utf-8">
@@ -21,7 +21,7 @@
             </nav>
         </div>
 
-     
+
 
         <div class="wrapper bgded">
             <div id="pageintro" class="hoc clear">
@@ -50,7 +50,7 @@
 
 
             <script>
-                async function GetOrder() {
+                async function GetOrders() {
                     const response = await fetch("/user/orderProgress", {
                         method: "GET",
                         headers: { "Accept": "application/json" }
@@ -61,7 +61,7 @@
                         orders.forEach(order => {
                             const tr = document.createElement("tr");
                             let a = document.createElement("a");
-                            a.href = "";
+                            a.href = "order.html?id=" + order.id;
                             a.innerText = order.secondId;
                             tr.append(a);
                             table.append(tr);
@@ -70,9 +70,9 @@
                 }
 
 
-                GetOrder();
+                GetOrders();
             </script>
     </body>
 
-   
+
 </html>

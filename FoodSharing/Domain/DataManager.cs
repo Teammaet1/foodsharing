@@ -11,12 +11,10 @@ namespace FoodSharing.Domain
         public IOrderRepository order { get; set; }
         public IProductRepository product { get; set; }
         public IShopRepository shop { get; set; }
-        public ITypeUserRepository typeUser { get; set; }
 
         public DataManager(ICategoryRepository categoryRepository, IChainShopRepository chainShopRepository,
                             ILinkRepository linkRepository, IOrderRepository orderRepository,
-                            IProductRepository productRepository, IShopRepository shopRepository,
-                            ITypeUserRepository typeUserRepository)
+                            IProductRepository productRepository, IShopRepository shopRepository)
         {
             category = categoryRepository;
             chainShop = chainShopRepository;
@@ -24,7 +22,6 @@ namespace FoodSharing.Domain
             order = orderRepository;
             product = productRepository;
             shop = shopRepository;
-            typeUser = typeUserRepository;
         }
     }
 }

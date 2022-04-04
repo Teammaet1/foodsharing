@@ -16,12 +16,15 @@ namespace IESE.Controllers
     [Route("[controller]")]
     public class AccountController : ControllerBase
     {
-        private readonly UserManager<ApplicationUser> userManager; 
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<IdentityRole> role;
         private readonly SignInManager<ApplicationUser> signInManager;
-        public AccountController(UserManager<ApplicationUser> userMgr, SignInManager<ApplicationUser> signinMgr)
+        public AccountController(UserManager<ApplicationUser> userMgr, SignInManager<ApplicationUser> signinMgr,
+                                RoleManager<IdentityRole> role)
         {
             userManager = userMgr;
             signInManager = signinMgr;
+            this.role = role;
         }
 
         [HttpPost("Login")]
@@ -91,16 +94,16 @@ namespace IESE.Controllers
             return NotFound(); 
         }
 
-        [HttpGet("AuthorizeRole")] 
-        public async Task<IEnumerable<TypeUser>> AuthorizeRole()
+        [HttpGet("AuthorizeRole")]
+        public async Task<IEnumerable<string>> AuthorizeRole()
         {
             if (User.Identity.IsAuthenticated)
             {
                 var user = userManager.FindByIdAsync(User.FindFirst(x => x.Type == "id").Value).Result;
                 if (user != null)
-                    return user.TypeUsers;
+                    return userManager.GetRolesAsync(user).Result;
             }
-            return null; 
+            return null;
         }
 
         private async Task Authenticate(ApplicationUser user)

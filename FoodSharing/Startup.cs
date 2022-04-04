@@ -19,7 +19,6 @@ namespace FoodSharing
             Configuration.Bind("Project", new Config());
 
             services.AddTransient<ICategoryRepository, EFCategoryRepository>();
-            services.AddTransient<ITypeUserRepository, EFTypeUserRepository>(); 
             services.AddTransient<IChainShopRepository, EFChainShopRepository>();
             services.AddTransient<IShopRepository, EFShopRepository>();
             services.AddTransient<ILinkRepository, EFLinkRepository>();

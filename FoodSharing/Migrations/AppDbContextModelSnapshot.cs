@@ -22,6 +22,21 @@ namespace FoodSharing.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("CategoryShop", b =>
+                {
+                    b.Property<Guid>("CategoriesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ShopsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CategoriesId", "ShopsId");
+
+                    b.HasIndex("ShopsId");
+
+                    b.ToTable("CategoryShop");
+                });
+
             modelBuilder.Entity("FoodSharing.Domain.Entities.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -96,9 +111,9 @@ namespace FoodSharing.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
+                            Id = "3b62473e-4f66-49fa-a20f-e7685b9565d8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b0a2c66f-5df2-4b4f-b493-8fa324f1897a",
+                            ConcurrencyStamp = "8836ab80-5b71-45a9-801b-d73123390641",
                             CountOrder = 0,
                             Email = "my@email.com",
                             EmailConfirmed = true,
@@ -106,12 +121,31 @@ namespace FoodSharing.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MY@EMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIyltSaVYNe8Z+00PkWXx+af9NEcV4OES9C66lQQIyKKT+lCCQgAVj/SaGpNqsDSlw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDrlsLWQaJ8dRWxofOfS5jWWydXSwHMmgujEX8805HOCwWOLkCm9UsPggw/UBmJRQg==",
                             PhoneNumber = "+7777777777",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
                             UserName = "admin"
+                        },
+                        new
+                        {
+                            Id = "9d173eac-8562-4aa5-9d69-a91e23905927",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "a8edf7b8-9d9e-4632-9d11-4417892c960d",
+                            CountOrder = 0,
+                            Email = "me@email.com",
+                            EmailConfirmed = true,
+                            Fio = "Ker Ker Ker",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ME@EMAIL.COM",
+                            NormalizedUserName = "KERA",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKU7OYqFcQRdQb5GeHA7IRcvkm3GcRHxcd0MMj8EZwWgr72+AZH0NSy6iYUtFpithQ==",
+                            PhoneNumber = "+7777777777",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            TwoFactorEnabled = false,
+                            UserName = "Kera"
                         });
                 });
 
@@ -125,12 +159,7 @@ namespace FoodSharing.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ShopId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ShopId");
 
                     b.ToTable("Categories");
                 });
@@ -172,6 +201,26 @@ namespace FoodSharing.Migrations
                     b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Links");
+                });
+
+            modelBuilder.Entity("FoodSharing.Domain.Entities.ListUser", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("ListUsers");
                 });
 
             modelBuilder.Entity("FoodSharing.Domain.Entities.Order", b =>
@@ -243,26 +292,6 @@ namespace FoodSharing.Migrations
                     b.ToTable("Shops");
                 });
 
-            modelBuilder.Entity("FoodSharing.Domain.Entities.TypeUser", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.ToTable("TypeUsers");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -293,16 +322,23 @@ namespace FoodSharing.Migrations
                         new
                         {
                             Id = "44546e06-8719-4ad8-b88a-f271ae9d6eab",
-                            ConcurrencyStamp = "55886884-c11f-424a-beaa-3c3417373d0a",
+                            ConcurrencyStamp = "a7713715-4d67-4940-9871-79b304e99747",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "44546e05-8719-4ad8-b88a-f271ae9d6eab",
-                            ConcurrencyStamp = "9a0e304c-b82d-4708-bd16-2ec6928d3a0e",
-                            Name = "user",
-                            NormalizedName = "USER"
+                            Id = "5e6bb83b-674a-44d2-b0e7-bc755d32c185",
+                            ConcurrencyStamp = "a9fde6d9-db6b-4f67-ae3a-313137d524e0",
+                            Name = "tutor",
+                            NormalizedName = "TUTOR"
+                        },
+                        new
+                        {
+                            Id = "44546e10-8719-4ad8-b88a-f271ae9d6eab",
+                            ConcurrencyStamp = "12b45e2b-149d-47aa-a1ed-7ad62a69dd0a",
+                            Name = "volunteer",
+                            NormalizedName = "VOLUNTEER"
                         });
                 });
 
@@ -395,8 +431,13 @@ namespace FoodSharing.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
-                            RoleId = "44546e05-8719-4ad8-b88a-f271ae9d6eab"
+                            UserId = "3b62473e-4f66-49fa-a20f-e7685b9565d8",
+                            RoleId = "44546e10-8719-4ad8-b88a-f271ae9d6eab"
+                        },
+                        new
+                        {
+                            UserId = "9d173eac-8562-4aa5-9d69-a91e23905927",
+                            RoleId = "5e6bb83b-674a-44d2-b0e7-bc755d32c185"
                         });
                 });
 
@@ -434,17 +475,32 @@ namespace FoodSharing.Migrations
                     b.ToTable("OrderProduct");
                 });
 
-            modelBuilder.Entity("FoodSharing.Domain.Entities.Category", b =>
+            modelBuilder.Entity("CategoryShop", b =>
                 {
+                    b.HasOne("FoodSharing.Domain.Entities.Category", null)
+                        .WithMany()
+                        .HasForeignKey("CategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("FoodSharing.Domain.Entities.Shop", null)
-                        .WithMany("Categories")
-                        .HasForeignKey("ShopId");
+                        .WithMany()
+                        .HasForeignKey("ShopsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("FoodSharing.Domain.Entities.Link", b =>
                 {
                     b.HasOne("FoodSharing.Domain.Entities.ApplicationUser", null)
                         .WithMany("Links")
+                        .HasForeignKey("ApplicationUserId");
+                });
+
+            modelBuilder.Entity("FoodSharing.Domain.Entities.ListUser", b =>
+                {
+                    b.HasOne("FoodSharing.Domain.Entities.ApplicationUser", null)
+                        .WithMany("Volunteers")
                         .HasForeignKey("ApplicationUserId");
                 });
 
@@ -475,13 +531,6 @@ namespace FoodSharing.Migrations
                     b.HasOne("FoodSharing.Domain.Entities.ChainShop", null)
                         .WithMany("Shops")
                         .HasForeignKey("ChainShopId");
-                });
-
-            modelBuilder.Entity("FoodSharing.Domain.Entities.TypeUser", b =>
-                {
-                    b.HasOne("FoodSharing.Domain.Entities.ApplicationUser", null)
-                        .WithMany("TypeUsers")
-                        .HasForeignKey("ApplicationUserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -556,7 +605,7 @@ namespace FoodSharing.Migrations
 
                     b.Navigation("Orders");
 
-                    b.Navigation("TypeUsers");
+                    b.Navigation("Volunteers");
                 });
 
             modelBuilder.Entity("FoodSharing.Domain.Entities.Category", b =>
@@ -567,11 +616,6 @@ namespace FoodSharing.Migrations
             modelBuilder.Entity("FoodSharing.Domain.Entities.ChainShop", b =>
                 {
                     b.Navigation("Shops");
-                });
-
-            modelBuilder.Entity("FoodSharing.Domain.Entities.Shop", b =>
-                {
-                    b.Navigation("Categories");
                 });
 #pragma warning restore 612, 618
         }

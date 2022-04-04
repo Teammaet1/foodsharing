@@ -27,7 +27,7 @@ namespace FoodSharing.Controllers
         [HttpGet("user")]
         public ApplicationUser GetUser(Guid id)
         {
-            return userManager.Users.Include(x => x.Links).Include(x => x.TypeUsers).FirstOrDefault(x => x.Id == id.ToString());
+            return userManager.Users.Include(x => x.Links).FirstOrDefault(x => x.Id == id.ToString());
         }
 
         [HttpGet("orderProgress")]
@@ -35,13 +35,20 @@ namespace FoodSharing.Controllers
         {
             var id = User.FindFirst(x => x.Type == "id").Value;
             var orders = userManager.Users.Include(x => x.Orders).ThenInclude(x => x.shop).FirstOrDefault(x => x.Id == id).Orders.Where(x => x.Status == "Progress").ToList();
-            return orders; //userManager.Users.Include(x => x.Links).Include(x => x.TypeUsers).Include(x => x.Orders).FirstOrDefault(x => x.Id == id.ToString()).Orders.Where(x => x.Status == "Progress").ToList();
+            return orders; 
         }
 
         [HttpGet("orderProducts/{id}")]
-        public List<Product> GetOrderProducts(Guid id) //TODO: Куки
+        public Order GetOrder(Guid id) 
         {
-            return dataManager.order.GetOrderById(id).Products;
+           // var idUser = User.FindFirst(x => x.Type == "id").Value;
+           // var user = userManager.Users.Include(x => x.Orders).ThenInclude(x => x.shop).FirstOrDefault(x => x.Id == idUser);
+
+            var order = dataManager.order.GetOrderById(id);
+           // if(user.Orders.FirstOrDefault(x => x.Id == order.Id) != null)
+                return order;
+          //  return new List<Product>();
         }
+
     }
 }

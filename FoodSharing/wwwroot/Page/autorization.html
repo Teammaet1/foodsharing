@@ -86,7 +86,7 @@
         var referrer_url = document.referrer; //Заносим в переменную прошлую ссылку
         async function Login(userEmail, userPassword, rememberMe) { //Функция входа в аккаунт
 
-            const response = await fetch("https://localhost:7285/Account/Login", {
+            const response = await fetch("/account/Login", {
                 method: "POST",
                 headers: { "Accept": "application/json", "Content-Type": "application/json"},
                 body: JSON.stringify({ // в json отправляем майл пароль и статическую переменную не запоминать акканут(так как еще не работает запоминание)

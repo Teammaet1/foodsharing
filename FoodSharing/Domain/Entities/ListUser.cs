@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace FoodSharing.Domain.Entities
 {
-    public class TypeUser
+    public class ListUser
     {
         public Guid Id { get; set; }
-        public string Type { get; set; }
+        public string UserId { get; set; }
     }
 }
