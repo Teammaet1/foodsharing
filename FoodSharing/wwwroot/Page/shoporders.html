@@ -4,7 +4,7 @@
 <title>Foodsharing</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<link href="../layout/styles/layout.css" rel="stylesheet" type="text/css" media="all">
+<link href="../css/layout.css" rel="stylesheet" type="text/css" media="all">
 </head>
 <body style="background-image: url('../images/demo/backgrounds/1.jpg'); min-height: 100vh; max-height: auto; background-repeat: no-repeat; background-size: cover; background-position: center center; color: black; text-align: center; display: flex; flex-direction: column; justify-content: space-between; ">
 
@@ -29,28 +29,69 @@
 
 <div style="margin-bottom: 280px;" class="wrapper row3">
   <main class="hoc container clear">
-    <div class="center btmspace-50">
-      <h2 class="heading">Заказы</h2>
+      <div class="center btmspace-50">
+          <h2 class="heading">Заказы</h2>
 
-        <form>
-          <a href = "view_tag.php?id=3" target="_blank">  Монетка Блюхера 3  </a>
-            <a href = "view_tag.php?id=3" target="_blank">  Пятерочка Ленина 54 </a>
-              <a href = "view_tag.php?id=3" target="_blank">  Кировоградская 69 </a>
-            </form>
-    </div>
+          <table id="volontersItem">
+          </table>
+      </div>
 
     <div class="clear"></div>
   </main>
 </div>
+    <script>
 
+        async function GetShopWithOrder() {
+            const response = await fetch("https://localhost:7285/order/searchOrder", {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            });
+            if (response.ok === true) {
+                const orders = await response.json();
+                let table = document.getElementById("volontersItem");
+                orders.forEach(order => {
+                    const tr = document.createElement("tr");
+                    let a = document.createElement("a");
+                    a.href = "order.html?id=" + order.id;
+                    a.innerText = order.shop.chain.name + " " + order.shop.address;
+                    tr.append(a);
+                    table.append(tr);
+                })
+            }
+        }
 
-<a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
-<!-- JAVASCRIPTS -->
-<script src="layout/scripts/jquery.min.js"></script>
-<script src="layout/scripts/jquery.backtotop.js"></script>
-<script src="layout/scripts/jquery.mobilemenu.js"></script>
-<!-- IE9 Placeholder Support -->
-<script src="layout/scripts/jquery.placeholder.min.js"></script>
-<!-- / IE9 Placeholder Support -->
+        async function Authorize() {
+            const response = await fetch("https://localhost:7285/Account/Authorize", {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            });
+            if (response.ok === false) {
+                window.location.href = '/index.html';
+            }
+            else
+                Role();
+        }
+
+        async function Role() {
+            const response = await fetch("https://localhost:7285/Account/AuthorizeRole", {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            });
+            if (response.ok === true) {
+                const resStr = await response.json();
+                let exit = true
+                resStr.forEach(str => {
+                    if (str === "tutor")
+                        exit = false;
+                })
+                if (exit)
+                    window.location.href = '/index.html';
+            }
+
+        }
+
+        Authorize();
+        GetShopWithOrder();
+    </script>
 </body>
 </html>

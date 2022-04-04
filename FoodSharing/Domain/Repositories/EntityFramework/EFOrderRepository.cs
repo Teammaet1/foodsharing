@@ -24,12 +24,12 @@ namespace FoodSharing.Domain.Repositories.EntityFramework
 
         public Order GetOrderById(Guid id)
         {
-            return context.Orders.Include(x => x.Products).Include(x => x.shop).FirstOrDefault(c => c.Id == id);
+            return context.Orders.Include(x => x.Products).Include(x => x.shop).ThenInclude(x => x.Chain).FirstOrDefault(c => c.Id == id);
         }
 
         public IQueryable<Order> GetOrders()
         {
-            return context.Orders.Include(x => x.shop).Include(x => x.Products);
+            return context.Orders.Include(x => x.shop).ThenInclude(x => x.Chain).Include(x => x.Products);
         }
 
         public async Task SaveOrder(Order entity)

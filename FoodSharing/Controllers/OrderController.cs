@@ -28,13 +28,6 @@ namespace FoodSharing.Controllers
         [HttpGet("{id}")]
         public Order GetOrder(Guid Id)
         {
-            // var idUser = User.FindFirst(x => x.Type == "id").Value;
-            // var user = userManager.Users.Include(x => x.Orders).ThenInclude(x => x.shop).FirstOrDefault(x => x.Id == idUser);
-
-           // var order = dataManager.order.GetOrders().ToList();
-            // if(user.Orders.FirstOrDefault(x => x.Id == order.Id) != null)
-           // return order;
-            //  return new List<Product>();
 
             var id = User.FindFirst(x => x.Type == "id").Value;
             var order = userManager.Users.Include(x => x.Orders).ThenInclude(x => x.shop).Include(x => x.Orders).ThenInclude(x => x.Products)
@@ -46,13 +39,6 @@ namespace FoodSharing.Controllers
         [HttpGet("done/{id}")]
         public IActionResult Done(Guid Id)
         {
-            // var idUser = User.FindFirst(x => x.Type == "id").Value;
-            // var user = userManager.Users.Include(x => x.Orders).ThenInclude(x => x.shop).FirstOrDefault(x => x.Id == idUser);
-
-            // var order = dataManager.order.GetOrders().ToList();
-            // if(user.Orders.FirstOrDefault(x => x.Id == order.Id) != null)
-            // return order;
-            //  return new List<Product>();
 
             var id = User.FindFirst(x => x.Type == "id").Value;
             var order = userManager.Users.Include(x => x.Orders).ThenInclude(x => x.shop).Include(x => x.Orders).ThenInclude(x => x.Products)
@@ -64,6 +50,25 @@ namespace FoodSharing.Controllers
                 return Ok();
             }
             return NotFound();
+        }
+
+        [HttpGet("searchOrder")]
+        public IEnumerable<Order> GetSearchOrder()
+        {
+
+            var id = User.FindFirst(x => x.Type == "id").Value;
+            var user = userManager.Users.Include(x => x.Orders).ThenInclude(x => x.shop).ThenInclude(x => x.Chain)
+                .FirstOrDefault(x => x.Id == id);
+            if(userManager.GetRolesAsync(user).Result.Contains("tutor"))
+            {
+                user.Orders.ForEach(x => x.shop.Chain.Shops = null);
+                var orders = dataManager.order.GetOrders().Where(x => x.Status == "Search").ToList();
+                orders.ForEach(x => x.shop.Chain.Shops = null);
+                return orders;
+            }
+
+
+            return null;
         }
     }
 }

@@ -50,5 +50,19 @@ namespace FoodSharing.Controllers
           //  return new List<Product>();
         }
 
+
+        [HttpGet("volonters")]
+        public IEnumerable<ApplicationUser> GetVolonters()
+        {
+            var id = User.FindFirst(x => x.Type == "id").Value;
+            var user = userManager.Users.Include(x => x.Volunteers).FirstOrDefault(x => x.Id == id);
+            List<ApplicationUser> users = new List<ApplicationUser>();
+            user.Volunteers.ForEach(x => users.Add(userManager.FindByIdAsync(x.UserId).Result));
+
+
+            return users;
+        }
+
+
     }
 }
