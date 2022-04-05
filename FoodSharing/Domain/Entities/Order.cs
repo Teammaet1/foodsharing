@@ -15,7 +15,7 @@ namespace FoodSharing.Domain.Entities
         [ForeignKey("Second"), Column(Order = 0)]
         public int SecondId { get; set; }
         public string Status { get; set; }
-        public List<Product> Products { get; set; } = new List<Product>();
+        public List<CountProduct> Products { get; set; } = new List<CountProduct>();
         public Shop shop { get; set; }
         public ApplicationUser? User { get; set; }
     }

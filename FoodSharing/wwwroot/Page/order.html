@@ -60,7 +60,7 @@
                     shop.append(order.shop.address)
                     order.products.forEach(product => {
                         const tr = document.createElement("tr");
-                        tr.append(product.name);
+                        tr.append(product.product.name + ": " + product.count);
                         table.append(tr);
                     })
                 }

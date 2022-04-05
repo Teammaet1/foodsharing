@@ -4,6 +4,7 @@ using FoodSharing.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodSharing.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220405121947_v4")]
+    partial class v4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,7 +115,7 @@ namespace FoodSharing.Migrations
                         {
                             Id = "3b62473e-4f66-49fa-a20f-e7685b9565d8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8b5a6e21-c8ab-4e6f-b8dd-a80a6b685b60",
+                            ConcurrencyStamp = "3badb09a-7eaa-4767-b1db-601870670c2f",
                             CountOrder = 0,
                             Email = "my@email.com",
                             EmailConfirmed = true,
@@ -121,7 +123,7 @@ namespace FoodSharing.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MY@EMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGZ5d0pUyMJ1BbKRFdAz/OWqXhHTkMSuMlIPVbholLg8RUz8MwCnuEI41D+90RseKw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEL/euvuJyCAPxqwyLcFQqOKIhnJ7G8Ligj5nMeHgPdKQm4FN8O/h+dgFVLCbIDhDbA==",
                             PhoneNumber = "+7777777777",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
@@ -132,7 +134,7 @@ namespace FoodSharing.Migrations
                         {
                             Id = "9d173eac-8562-4aa5-9d69-a91e23905927",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "71df0af0-d169-40b7-baa3-fd6b72b3519b",
+                            ConcurrencyStamp = "876f11ad-aec4-405c-8f36-e02e9af70d13",
                             CountOrder = 0,
                             Email = "me@email.com",
                             EmailConfirmed = true,
@@ -140,7 +142,7 @@ namespace FoodSharing.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ME@EMAIL.COM",
                             NormalizedUserName = "KERA",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKFLU4NzDHVdZOn29fvU85TGbVfZEuXPZq+aToWdIISb6deZlOAksZgUpMVh567j3g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIK1pUK6h/qk3vz5Q+gPM+NYD00dV9t2sI7aMdIG6eKRDOYvwF0ZbBnoghQ5BbHkNw==",
                             PhoneNumber = "+7777777777",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
@@ -177,30 +179,6 @@ namespace FoodSharing.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ChainShops");
-                });
-
-            modelBuilder.Entity("FoodSharing.Domain.Entities.CountProduct", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("OrderId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("CountProducts");
                 });
 
             modelBuilder.Entity("FoodSharing.Domain.Entities.Link", b =>
@@ -349,21 +327,21 @@ namespace FoodSharing.Migrations
                         new
                         {
                             Id = "44546e06-8719-4ad8-b88a-f271ae9d6eab",
-                            ConcurrencyStamp = "bf39ba1c-5312-48ba-abc3-d30c8bfadacd",
+                            ConcurrencyStamp = "1cbc2acf-91e3-4b5f-a7fe-a3a7c21d6b62",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "5e6bb83b-674a-44d2-b0e7-bc755d32c185",
-                            ConcurrencyStamp = "11b95700-042a-42bc-9b92-5f4c691996f8",
+                            ConcurrencyStamp = "f9ea6991-c847-44b6-be88-affa50acfad6",
                             Name = "tutor",
                             NormalizedName = "TUTOR"
                         },
                         new
                         {
                             Id = "44546e10-8719-4ad8-b88a-f271ae9d6eab",
-                            ConcurrencyStamp = "290a098d-de6d-4128-b7a2-683c4ed6e438",
+                            ConcurrencyStamp = "efc32923-e10c-42c1-850d-b02cf32a561e",
                             Name = "volunteer",
                             NormalizedName = "VOLUNTEER"
                         });
@@ -487,6 +465,21 @@ namespace FoodSharing.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("OrderProduct", b =>
+                {
+                    b.Property<Guid>("OrdersId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("OrdersId", "ProductsId");
+
+                    b.HasIndex("ProductsId");
+
+                    b.ToTable("OrderProduct");
+                });
+
             modelBuilder.Entity("CategoryShop", b =>
                 {
                     b.HasOne("FoodSharing.Domain.Entities.Category", null)
@@ -500,21 +493,6 @@ namespace FoodSharing.Migrations
                         .HasForeignKey("ShopsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("FoodSharing.Domain.Entities.CountProduct", b =>
-                {
-                    b.HasOne("FoodSharing.Domain.Entities.Order", null)
-                        .WithMany("Products")
-                        .HasForeignKey("OrderId");
-
-                    b.HasOne("FoodSharing.Domain.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("FoodSharing.Domain.Entities.Link", b =>
@@ -617,6 +595,21 @@ namespace FoodSharing.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("OrderProduct", b =>
+                {
+                    b.HasOne("FoodSharing.Domain.Entities.Order", null)
+                        .WithMany()
+                        .HasForeignKey("OrdersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FoodSharing.Domain.Entities.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("FoodSharing.Domain.Entities.ApplicationUser", b =>
                 {
                     b.Navigation("Links");
@@ -634,11 +627,6 @@ namespace FoodSharing.Migrations
             modelBuilder.Entity("FoodSharing.Domain.Entities.ChainShop", b =>
                 {
                     b.Navigation("Shops");
-                });
-
-            modelBuilder.Entity("FoodSharing.Domain.Entities.Order", b =>
-                {
-                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

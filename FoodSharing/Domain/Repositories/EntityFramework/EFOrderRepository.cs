@@ -24,7 +24,7 @@ namespace FoodSharing.Domain.Repositories.EntityFramework
 
         public Order GetOrderById(Guid id)
         {
-            return context.Orders.Include(x => x.Products).Include(x => x.shop).ThenInclude(x => x.Chain).FirstOrDefault(c => c.Id == id);
+            return context.Orders.Include(x => x.Products).ThenInclude(x => x.Product).Include(x => x.shop).ThenInclude(x => x.Chain).FirstOrDefault(c => c.Id == id);
         }
 
         public IQueryable<Order> GetOrders()

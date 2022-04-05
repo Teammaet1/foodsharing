@@ -29,7 +29,7 @@ namespace FoodSharing.Domain.Repositories.EntityFramework
 
         public IQueryable<Product> GetProducts()
         {
-            return context.Products.Include(x => x.Orders);
+            return context.Products;
         }
 
         public async Task SaveProduct(Product entity)

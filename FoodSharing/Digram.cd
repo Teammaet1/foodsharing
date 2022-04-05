@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="FoodSharing.Domain.Entities.ApplicationUser">
-    <Position X="10.5" Y="3" Width="1.5" />
+    <Position X="10.75" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAUAAAAAAAAAAACAAAAAAAAIAAAAAAAACAAAAAAAAAA=</HashCode>
       <FileName>Domain\Entities\ApplicationUser.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
+      <Property Name="Volunteers" />
       <Property Name="Orders" />
       <Property Name="Links" />
-      <Property Name="Volunteers" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="FoodSharing.Domain.Entities.Category">
-    <Position X="5" Y="1.75" Width="1.5" />
+    <Position X="8" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAEAAAAAQAAAAAAAAAAAAAAAAAAAQ=</HashCode>
       <FileName>Domain\Entities\Category.cs</FileName>
@@ -24,7 +24,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="FoodSharing.Domain.Entities.ChainShop">
-    <Position X="1.25" Y="4.5" Width="1.5" />
+    <Position X="2.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAEAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Domain\Entities\ChainShop.cs</FileName>
@@ -34,26 +34,27 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="FoodSharing.Domain.Entities.Link">
-    <Position X="10.25" Y="5.25" Width="1.5" />
+    <Position X="11" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAgCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Domain\Entities\Link.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FoodSharing.Domain.Entities.ListUser">
-    <Position X="12.75" Y="3.25" Width="1.5" />
+    <Position X="13" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Domain\Entities\ListUser.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FoodSharing.Domain.Entities.Order">
-    <Position X="7.75" Y="4" Width="1.25" />
+    <Position X="8.25" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAEAAAAAABAAAAAAAAAAAAAAAAAgAAAAAAAAAQ=</HashCode>
+      <HashCode>AAADAAAEAAAAAABAAAAAAAAAAAAAAAAAgAAAAAAAAAQ=</HashCode>
       <FileName>Domain\Entities\Order.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
+      <Property Name="User" />
       <Property Name="shop" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
@@ -61,17 +62,14 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="FoodSharing.Domain.Entities.Product">
-    <Position X="8.25" Y="1.75" Width="1.5" />
+    <Position X="11.75" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAECAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Domain\Entities\Product.cs</FileName>
     </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Property Name="Orders" />
-    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="FoodSharing.Domain.Entities.Shop">
-    <Position X="3.75" Y="4.25" Width="1.5" />
+    <Position X="5.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>BAACAAAAAAAAAAAAAAAAAAAAAAAAEAACAAAAAAAAAAA=</HashCode>
       <FileName>Domain\Entities\Shop.cs</FileName>
@@ -79,6 +77,16 @@
     <ShowAsCollectionAssociation>
       <Property Name="Categories" />
     </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="FoodSharing.Domain.Entities.CountProduct">
+    <Position X="8.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Domain\Entities\CountProduct.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Product" />
+    </ShowAsAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

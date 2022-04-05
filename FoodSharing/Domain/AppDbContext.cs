@@ -19,6 +19,7 @@ namespace FoodSharing.Domain
         public DbSet<Product> Products { get; set; }
         public DbSet<Shop> Shops { get; set; }
         public DbSet<ListUser> ListUsers { get; set; }
+        public DbSet<CountProduct> CountProducts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

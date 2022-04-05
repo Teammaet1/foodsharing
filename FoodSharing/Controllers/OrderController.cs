@@ -31,10 +31,10 @@ namespace FoodSharing.Controllers
         {
 
             var id = User.FindFirst(x => x.Type == "id").Value;
-            var user = userManager.Users.Include(x => x.Orders).ThenInclude(x => x.shop).ThenInclude(x => x.Chain).Include(x => x.Orders).ThenInclude(x => x.Products)
+            var user = userManager.Users.Include(x => x.Orders).ThenInclude(x => x.shop).ThenInclude(x => x.Chain).Include(x => x.Orders).ThenInclude(x => x.Products).ThenInclude(x => x.Product)
                 .FirstOrDefault(x => x.Id == id);
             var order = user.Orders.FirstOrDefault(x => x.Id == Id);
-            order.Products.ForEach(x => x.Orders = null);
+           // order.Products.ForEach(x => x.Orders = null);
             order.shop.Chain.Shops = null;
             order.User.Orders = null;
             return order;
@@ -45,12 +45,12 @@ namespace FoodSharing.Controllers
         {
 
             var id = User.FindFirst(x => x.Type == "id").Value;
-            var user = userManager.Users.Include(x => x.Orders).ThenInclude(x => x.shop).ThenInclude(x => x.Chain).Include(x => x.Orders).ThenInclude(x => x.Products)
+            var user = userManager.Users.Include(x => x.Orders).ThenInclude(x => x.shop).ThenInclude(x => x.Chain).Include(x => x.Orders).ThenInclude(x => x.Products).ThenInclude(x => x.Product)
                 .FirstOrDefault(x => x.Id == id);
             if(!userManager.GetRolesAsync(user).Result.Contains("tutor"))
                 return null;
             var order = dataManager.order.GetOrderById(Id);
-            order.Products.ForEach(x => x.Orders = null);
+          //  order.Products.ForEach(x => x.Orders = null);
             order.shop.Chain.Shops = null; 
             return order;
         }
@@ -83,7 +83,7 @@ namespace FoodSharing.Controllers
                 user.Orders.ForEach(x => x.shop.Chain.Shops = null);
                 var orders = dataManager.order.GetOrders().Where(x => x.Status == "Search").ToList();
                 orders.ForEach(x => x.shop.Chain.Shops = null);
-                orders.ForEach(x => x.Products.ForEach(x => x.Orders = null));
+            //    orders.ForEach(x => x.Products.ForEach(x => x.Orders = null));
                 return orders;
             }
 
