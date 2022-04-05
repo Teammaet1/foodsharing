@@ -36,6 +36,7 @@ namespace FoodSharing.Controllers
             var order = user.Orders.FirstOrDefault(x => x.Id == Id);
             order.Products.ForEach(x => x.Orders = null);
             order.shop.Chain.Shops = null;
+            order.User.Orders = null;
             return order;
         }
 
@@ -91,7 +92,7 @@ namespace FoodSharing.Controllers
         }
 
         [HttpPost("sendVolonter")]
-        public IActionResult SendVolonter(IdModel idModel)
+        public async Task<IActionResult> SendVolonter(IdModel idModel)
         {
 
             var id = User.FindFirst(x => x.Type == "id").Value;
@@ -102,7 +103,7 @@ namespace FoodSharing.Controllers
             var order = dataManager.order.GetOrderById(Guid.Parse(idModel.idOrder));
             order.Status = "Progress";
             volonter.Orders.Add(order);
-            userManager.UpdateAsync(volonter);
+            await userManager.UpdateAsync(volonter);
             return Ok();
         }
     }

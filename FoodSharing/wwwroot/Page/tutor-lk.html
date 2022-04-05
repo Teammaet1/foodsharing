@@ -12,12 +12,12 @@
   <nav id="mainav" class="hoc clear">
     <!-- ################################################################################################ -->
     <ul class="clear">
-      <li><a href="index.html">Главная</a></li>
+      <li><a href="../index.html">Главная</a></li>
       <li><a href="to-volonteers.html">Участникам</a></li>
       <li><a href="sidebar-right.html">Sidebar Right</a></li>
       <li ><a href="volonterstvo.html">Волонтерство</a></li>
       <li><a href="FAQ.html">Справка</a></li>
-      <li class="active"><a href="../pages/tutor.html">Личный кабинет</a></li>
+      <li class="active"><a >Личный кабинет</a></li>
     </ul>
   </nav>
 </div>
@@ -38,7 +38,7 @@
             <button class="custom-btn btn-3"><span>Мои данные</span></button>
             <a href="shoporders.html" class="custom-btn btn-3"><span>Заказы</span></a>
             <button class="custom-btn btn-3"><span>Список магазинов</span></button>
-            <button class="custom-btn btn-3"><span>Выйти</span></button>
+            <button id="Out" class="custom-btn btn-3"><span>Выйти</span></button>
             </form>
     </div>
 
@@ -77,6 +77,23 @@
             }
 
         }
+
+        async function Out() {
+            const response = await fetch("/Account/Logout", {
+                method: "Get",
+                headers: { "Accept": "application/json" }
+            });
+            if (response.ok === true) {
+                const a = document.createElement('a');
+                a.setAttribute('href', "../index.html");
+                a.click();
+            }
+        }
+
+        document.getElementById("Out").addEventListener("click", e => {
+            e.preventDefault();
+            Out();
+        });
 
         Authorize();
     </script>

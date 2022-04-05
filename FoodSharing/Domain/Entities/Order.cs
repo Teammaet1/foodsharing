@@ -17,5 +17,6 @@ namespace FoodSharing.Domain.Entities
         public string Status { get; set; }
         public List<Product> Products { get; set; } = new List<Product>();
         public Shop shop { get; set; }
+        public ApplicationUser? User { get; set; }
     }
 }

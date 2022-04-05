@@ -35,6 +35,7 @@ namespace FoodSharing.Controllers
         {
             var id = User.FindFirst(x => x.Type == "id").Value;
             var orders = userManager.Users.Include(x => x.Orders).ThenInclude(x => x.shop).FirstOrDefault(x => x.Id == id).Orders.Where(x => x.Status == "Progress").ToList();
+            orders.ForEach(x => x.User.Orders = null);
             return orders; 
         }
 
